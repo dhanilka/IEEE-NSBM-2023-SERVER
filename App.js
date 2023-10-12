@@ -61,6 +61,17 @@ app.get('/fetch-data', async (req,res)=>{
     })
 })
 
+app.get('/leaderboard-data', async (req, res) => {
+    let sql = 'SELECT * FROM leaderboard ORDER BY grp_score DESC LIMIT 5';
+    mscon.query(sql, async (err, rows) => {
+        if (err) {
+            res.status(500).json({ message: 'Internal server error' });
+        } else {
+            res.status(200).json({ message: 'Success', data: rows });
+        }
+    });
+});
+
 app.post('/update-data', (req, res) => {
     const { groupName, score, groupNo } = req.body;
   
